@@ -1,9 +1,21 @@
+using WebApplication3.Custom_MiddleWare;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+
+app.Use(async (context, next) =>
+{ 
+Console.WriteLine("Hello");
+await next(context);
+Console.WriteLine("Bye"); 
+
+   } );
+
+app.UseMiddleware<RequestTimingMiddleware>();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
